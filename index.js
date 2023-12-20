@@ -15,7 +15,10 @@ app.listen(port, () => {
 })
 
 app.get('/', (req, res) => {
-    res.render('index.ejs');
+
+    // Use API to fetch cover of book. 
+
+    res.render('index.ejs', { temp_data: {} } );
 });
 
 
