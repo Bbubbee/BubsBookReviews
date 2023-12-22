@@ -18,9 +18,6 @@ app.listen(port, () => {
 
 
 app.get('/', (req, res) => {
-
-    // Use API to fetch cover of book. 
-
     res.render('index.ejs', { temp_data: {} } );
 });
 
@@ -40,18 +37,27 @@ app.get('/search', async (req, res) => {
 });
 
 
+app.get('/search-page', async (req, res) => {
+
+    // Fetch info about book from API. 
+    res.render('search.ejs');
+});
+
+
 
 async function get_books(title) {
     const api_url = "https://openlibrary.org/search.json?q="+title;
-    let books = []; 
 
     const response = await axios.get(api_url);
     const result = response.data.docs;  // This gets each book.
 
+    // console.log(result[0]);
+
+    let books = []; 
+
     for (var i = 0; i < 10; i++) {
 
         let cover_url = "";
-
         if (result[i].cover_i != null) {
             cover_url = "https://covers.openlibrary.org/b/id/"+result[i].cover_i+"-L.jpg";
         }
@@ -60,9 +66,9 @@ async function get_books(title) {
         }
 
         const book = {
+            isbn: result[i].isbn[1],
             title: result[i].title,
             cover_url: cover_url
-
         }
 
         books.push(book); 
@@ -70,6 +76,23 @@ async function get_books(title) {
 
     return books; 
 }
+
+
+app.get('/review/:isbn', async (req, res) => {
+    const isbn = req.params.isbn;
+
+    // Get information about book. 
+    try {
+        const api_url = `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`
+        const response = await axios.get(api_url); 
+        console.log(response.data);
+    }
+    catch(err) {
+
+    }
+
+    res.render('review.ejs');
+});
 
 
 /* 

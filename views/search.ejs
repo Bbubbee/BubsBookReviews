@@ -17,12 +17,12 @@
     <% if (locals.books) { %>
         <% books.forEach(book => { %>
             <div class="book">
-                <img src= <%= book.cover_url %> alt="book image">
+                <a href="/review/<%= book.isbn %>"><img src= <%= book.cover_url %> alt="book image"></a>
                 <h3> <%= book.title %> </h3>
             </div>
         <% }) %>
     <% } %>
-    <!-- End looping through books -->
+    <!-- End of looping through books -->
 
 </div>
 <!-- End of .books-container -->
