@@ -11,9 +11,13 @@
     <button type="submit">Search</button>
 </form>
 
+<!-- Search results message.  -->
+<% if (locals.title) { %>
+    <p>Showing results for <strong> <%= title %> </strong> </p>
+<% } %>
 
+<!-- Show all of the books the client searched for.  -->
 <div class="books-container">
-
     <% if (locals.books) { %>
         <% books.forEach(book => { %>
             <div class="book">
@@ -21,8 +25,11 @@
                 <h3> <%= book.title %> </h3>
             </div>
         <% }) %>
-    <% } %>
+    <% } else if (locals.err) { %>
     <!-- End of looping through books -->
+        <p>Sorry! Book not found. </p>
+    <% } %>
+    
 
 </div>
 <!-- End of .books-container -->
