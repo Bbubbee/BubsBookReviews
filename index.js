@@ -7,6 +7,13 @@ import axios from "axios";
 const port = 3000;
 
 let app = express(); 
+let books = []; 
+/* This stores an array of books the user can review.
+It displays them on the screen in '/search'.
+When a books is pressed, information about the book can be retrieved using
+the id and this book_storage array. This is used in '/review'. 
+Once a book is reviewed, we add it to the database. */
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -24,19 +31,19 @@ app.get('/', (req, res) => {
 
 /* 
     The client is searching for a book based on title. 
+    Show a list of books relating to the title. 
 */
 app.get('/search', async (req, res) => {
     const title = req.query.title;
 
     try {
-        const books = await get_books(title); 
+        books = await get_books(title); 
         res.render('search.ejs', { books: books, title: title });
     }
     catch (err) {
         console.log("Failed to get book using title");
         res.render('search.ejs', { err: true } );
     }
-
 });
 
 
@@ -59,9 +66,9 @@ async function get_books(title) {
     const response = await axios.get(api_url);
     const result = response.data.docs;  // This gets each book.
 
-    console.log(result[0]);
+    // console.log(result[0]);
 
-    let books = []; 
+    let books_array = []; 
 
     // get olid: cover_edition_key
 
@@ -81,30 +88,21 @@ async function get_books(title) {
             cover_url: cover_url
         }
 
-        books.push(book); 
+        books_array.push(book); 
     }
 
-    return books; 
+    return books_array; 
 }
 
 
 app.get('/review/:isbn', async (req, res) => {
     const isbn = req.params.isbn;
-    const api_url = `https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json`
 
-    // Get information about book. 
-    try {
-        const response = await axios.get(api_url); 
-        const data = response.data; 
-        console.log(data);
+    // Check for book in books array. 
+    const book = books.find(book => book.isbn == isbn);
+    console.log(book);
 
-        res.render('review.ejs', { book: "" } );
-
-    }
-    catch(err) {
-        console.log("Failed to get book")
-    }
-
+    res.render('review.ejs', { book: book } );
 });
 
 
