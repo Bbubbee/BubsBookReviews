@@ -2,13 +2,14 @@
 
 <%- include("partials/header.ejs") %>
 
+
 <div class="wrapper">
 
     <% if (locals.book) { %>
         <div class="review-container">
 
             <strong> <%=locals.book.title%> </strong>
-            <p><img src="<%=book.cover_url%>" alt="book.title"></p>
+            <p> <img src="<%=book.cover_url%>" alt="book.title"> </p>
 
             <!-- Form for title, review, percentage rating -->
             <label for="review">Write a Review:</label>

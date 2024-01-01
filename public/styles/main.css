@@ -1,4 +1,12 @@
 
+* {
+    background-color: red;
+}
+
+header {
+    text-align: center;
+    margin: 40 auto;
+}
 
 .wrapper {
     max-width: 1200px;
@@ -23,8 +31,5 @@
 /*************************************************************/
 
 .review-container {
-    display: flex;
-    justify-content: center;
-    align-content: center;
     background-color: red;
 }

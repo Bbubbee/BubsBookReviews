@@ -103,10 +103,16 @@ async function get_books(title) {
 app.get('/review/:isbn', async (req, res) => {
     const isbn = req.params.isbn;
 
-    // Check for book in books array. 
-    const book = books.find(book => book.isbn == isbn);
+    try {
+        // Check for book in books array. 
+        const book = await books.find(book => book.isbn == isbn);
+        console.log(book);
 
-    res.render('review.ejs', { book: book } );
+        res.render('review.ejs', { book: book } );
+    }
+    catch (err) {
+        res.render('review.ejs');
+    }
 });
 
 
