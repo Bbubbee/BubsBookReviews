@@ -37,6 +37,7 @@ app.get('/search', async (req, res) => {
     const title = req.query.title;
 
     try {
+        books = []; 
         books = await get_books(title); 
         res.render('search.ejs', { books: books, title: title });
     }
@@ -95,12 +96,15 @@ async function get_books(title) {
 }
 
 
+/*
+    A user selects a book to review. 
+    Uses it's isbn to fetch the book from the array in memory. 
+*/
 app.get('/review/:isbn', async (req, res) => {
     const isbn = req.params.isbn;
 
     // Check for book in books array. 
     const book = books.find(book => book.isbn == isbn);
-    console.log(book);
 
     res.render('review.ejs', { book: book } );
 });
@@ -108,13 +112,13 @@ app.get('/review/:isbn', async (req, res) => {
 
 /* 
 
-Todo: 
-    - Examine the contents of the book object for relevant data. 
+    Todo: 
+        - Examine the contents of the book object for relevant data. 
 
-    Error checking: 
-        - Getting book info from APi 
+        Error checking: 
+            - Getting book info from APi 
 
-Notes: 
+    Notes: 
 
 */
 
