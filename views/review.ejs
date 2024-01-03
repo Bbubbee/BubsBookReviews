@@ -1,6 +1,28 @@
 
+<style>
+    header {
+        text-align: center;
+        margin: 40 auto;
+    }
+    
+    .wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .review-container {
+        display: flex;
+        gap: 2em; 
+        justify-content: center;
+    }
+
+    
+
+</style>
 
 <%- include("partials/header.ejs") %>
+
+
 
 
 <div class="wrapper">
@@ -8,18 +30,22 @@
     <% if (locals.book) { %>
         <div class="review-container">
 
-            <strong> <%=locals.book.title%> </strong>
-            <p> <img src="<%=book.cover_url%>" alt="book.title"> </p>
+            <div class="left-col">
+                <strong> <%=locals.book.title%> </strong>
+                <p> <img src="<%=book.cover_url%>" alt="book.title"> </p>
+            </div>
 
-            <!-- Form for title, review, percentage rating -->
-            <label for="review">Write a Review:</label>
-            <br>
-            <textarea id="review" name="review" rows="4" cols="50" placeholder="Type your review here..."></textarea>
-            <br>
+            <div class="right-col">
+                <!-- Form for title, review, percentage rating -->
+                <label for="review">Write a Review:</label>
+                <br>
+                <textarea id="review" name="review" rows="20" cols="50" placeholder="Type your review here..."></textarea>
+                <br>
 
-            <!-- Other form fields -->
+                <!-- Other form fields -->
 
-            <input type="submit" value="Submit Review">
+                <input type="submit" value="Submit Review">
+            </div>
 
         </div>
     <% } else { %>

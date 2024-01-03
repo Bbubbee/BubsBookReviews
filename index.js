@@ -62,7 +62,8 @@ app.get('/search-page', async (req, res) => {
     Fetches an array of books for a given title. 
 */
 async function get_books(title) {
-    const api_url = "https://openlibrary.org/search.json?q="+title;
+    const api_url = "https://openlibrary.org/search.json?q="+title+"&limit=20";
+    console.log(api_url);
 
     const response = await axios.get(api_url);
     const result = response.data.docs;  // This gets each book.
