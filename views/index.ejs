@@ -13,10 +13,19 @@
     <div class="reviewed-books">
 
         <h2>Books Bub has reviewed: </h2>
-        <!-- <div class="book">
-            <img src="" alt="Book image">
-            <h3>Book title</h3>
-        </div> -->
+
+        <% if (locals.books) { %>
+            <% books.forEach(book => { %>
+                <div class="book">
+                    <a href="/review/<%= book.isbn %>"><img src= <%= book.cover_url %> alt="book image"></a>
+                    <h3> <%= book.title %> </h3>
+                </div>
+            <% }) %>
+    
+        <!-- End of looping through books -->
+        <% } %>
+
+
 
     </div>
     <!-- End of .reviewed-books -->

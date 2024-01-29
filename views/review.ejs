@@ -1,5 +1,17 @@
 
+<head>
+
 <style>
+
+    /* 
+        Fonts 
+
+        font-family: 'Berkshire Swash', serif;
+        font-family: 'IM Fell Double Pica', serif;
+        font-family: 'IM Fell English SC', serif;
+        font-family: 'Montserrat', sans-serif;
+    */
+
     header {
         text-align: center;
         margin: 40 auto;
@@ -15,10 +27,16 @@
         gap: 2em; 
         justify-content: center;
     }
-
-    
-
 </style>
+
+<!-- Connect fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=IM+Fell+Double+Pica&family=IM+Fell+English+SC&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+
+</head>
+
+
 
 <%- include("partials/header.ejs") %>
 
@@ -27,11 +45,18 @@
 
 <div class="wrapper">
 
+    <!-- Review form -->
+    <form action="/add" method="post">
+
     <% if (locals.book) { %>
         <div class="review-container">
 
             <div class="left-col">
+                <!-- Title of book -->
                 <strong> <%=locals.book.title%> </strong>
+                <input type="hidden" id="title" name="title" value="<%=locals.book.title%>" >
+
+                <!-- Image of book -->
                 <p> <img src="<%=book.cover_url%>" alt="book.title"> </p>
             </div>
 
@@ -42,12 +67,22 @@
                 <textarea id="review" name="review" rows="20" cols="50" placeholder="Type your review here..."></textarea>
                 <br>
 
-                <!-- Other form fields -->
-
+                <!-- Rating percentage slider -->
+                <div class="slider-container">
+                    <input type="number" id="rating" name="rating" min="0" max="100" required>
+                </div>
+                <!-- End slider container  -->
+                
                 <input type="submit" value="Submit Review">
-            </div>
 
+            </div>
+            
         </div>
+        <!-- End of review-container -->
+
+    </form>
+    <!-- End of review form -->
+
     <% } else { %>
         <p>Error fetching book. </p>
     <% } %>

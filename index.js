@@ -2,6 +2,7 @@
 import express from "express";
 import bodyParser from "express";
 import axios from "axios";
+import pg from "pg";
 
 
 const port = 3000;
@@ -18,13 +19,35 @@ Once a book is reviewed, we add it to the database. */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
+// Database
+const db = new pg.Client({
+    user: "postgres",
+    host: "localhost", 
+    database: "bookreviews", 
+    password: "booty", 
+    port: 5432
+})
+db.connect(); 
+
 
 app.listen(port, () => {
     console.log("Server is running on port ", port);
 })
 
 
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    let books_reviewed = [];
+
+    // Get reviewed books from the database.
+    try {
+        const result = await db.query("SELECT * FROM books_reviewed");
+        const books = result.rows; 
+        console.log(books); 
+    }
+    catch (err) {
+        
+    }
+
     res.render('index.ejs', { temp_data: {} } );
 });
 
@@ -32,6 +55,12 @@ app.get('/', (req, res) => {
 /* 
     The client is searching for a book based on title. 
     Show a list of books relating to the title. 
+
+    INSERT INTO books_reviewed (title, cover_url, isbn, rating)
+VALUES ('Harry Potter and the Deathly Hallows', 
+	   'https://covers.openlibrary.org/b/id/10110415-L.jpg', 
+	   8498387000, 
+	   78)
 */
 app.get('/search', async (req, res) => {
     const title = req.query.title;
@@ -71,8 +100,6 @@ async function get_books(title) {
     // console.log(result[0]);
 
     let books_array = []; 
-
-    // get olid: cover_edition_key
 
     for (var i = 0; i < 10; i++) {
 
@@ -115,6 +142,15 @@ app.get('/review/:isbn', async (req, res) => {
         res.render('review.ejs');
     }
 });
+
+
+app.post('/add', async (req, res) => {
+    const title = req.body.title 
+    console.log(title); 
+
+    res.redirect('/');
+})
+
 
 
 /* 
