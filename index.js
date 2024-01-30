@@ -43,7 +43,6 @@ app.get('/', async (req, res) => {
         const result = await db.query("SELECT * FROM books_reviewed");
 
         result.rows.forEach(book => {
-            console.log(book); 
             books_reviewed.push(book); 
         });
     }
@@ -95,12 +94,8 @@ app.get('/search-page', async (req, res) => {
 */
 async function get_books(title) {
     const api_url = "https://openlibrary.org/search.json?q="+title+"&limit=20";
-    console.log(api_url);
-
     const response = await axios.get(api_url);
     const result = response.data.docs;  // This gets each book.
-
-    // console.log(result[0]);
 
     let books_array = []; 
 
@@ -161,7 +156,6 @@ app.get('/modify/:isbn', async (req, res) => {
         try {
             const result = await db.query("SELECT * FROM books_reviewed WHERE id = $1", [value]);
             const book = result.rows[0];
-            console.log(book);
 
             res.render('modify.ejs', { book: book, new: false } );
         }
@@ -173,15 +167,38 @@ app.get('/modify/:isbn', async (req, res) => {
     
 });
 
-app.get('/view/:id', (req, res) => {
-    res.render('view.ejs');
+app.get('/view/:id', async (req, res) => {
+    // Get the review from the database using the id
+    const id = req.params.id; 
+    try {
+        const result = await db.query("SELECT * FROM books_reviewed WHERE id = $1", [id]);
+        const book = result.rows[0];
+
+        res.render('view.ejs', { book: book } );
+    }
+    catch (err) {
+        res.render('view.ejs');
+    }
 });
 
 app.post('/add', async (req, res) => {
-    const title = req.body.title 
-    console.log(title); 
+    // Get review info
+    const title = req.body.title;
+    const cover_url = req.body.cover_url; 
+    const rating = parseInt(req.body.rating); 
+    const review = req.body.review; 
+    const isbn = req.body.isbn;
 
-    res.redirect('/');
+    // Try and put reviewed book into database. 
+    try {
+        await db.query("INSERT INTO books_reviewed (title, cover_url, rating, isbn, review) VALUES ($1, $2, $3, $4, $5)", 
+        [title, cover_url, rating, isbn, review] );
+        res.redirect('/');
+    }
+    catch (err) {
+        console.log(err);
+        res.redirect('/');
+    }
 })
 
 

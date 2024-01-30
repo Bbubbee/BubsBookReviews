@@ -2,4 +2,29 @@
 
 <%- include("partials/header.ejs") %>
 
-<h1>This is book bub has reviewed </h1>
+
+<div class="wrapper">
+    <h1>This is a book bub has reviewed </h1>
+
+
+    <!-- Check if book review exists -->
+    <% if (locals.book) { %>
+        <div class="view-container">
+            <div class="left-col">
+                <img src= <%= book.cover_url %> alt="book image">
+                <h3> <%= book.title %> </h3>
+                <p>Rating: <%= book.rating %> </p>
+            </div>
+
+            <div class="right-col">
+                <p> <%= book.review %> </p>
+            </div>
+        </div>
+
+
+    <!-- Book doesn't exist -->
+    <% } else { %>
+        <p> Failed to get book. Sorry. 404 error. </p>
+    <% } %>
+    
+</div>

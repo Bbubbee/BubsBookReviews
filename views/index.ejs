@@ -20,7 +20,6 @@
             <% if (locals.books) { %>
                 <% books.forEach(book => { %>
                     <div class="book">
-                        
                         <!-- Image of the book that links to the review page. -->
                         <a href="/view/<%= book.id %>"><img src= <%= book.cover_url %> alt="book image"></a>
 

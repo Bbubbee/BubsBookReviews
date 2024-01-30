@@ -1,42 +1,4 @@
 
-<head>
-
-<style>
-
-    /* 
-        Fonts 
-        font-family: 'Berkshire Swash', serif;
-        font-family: 'IM Fell Double Pica', serif;
-        font-family: 'IM Fell English SC', serif;
-        font-family: 'Montserrat', sans-serif;
-    */
-
-    header {
-        text-align: center;
-        margin: 40 auto;
-    }
-    
-    .wrapper {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .review-container {
-        display: flex;
-        gap: 2em; 
-        justify-content: center;
-    }
-</style>
-
-<!-- Connect fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=IM+Fell+Double+Pica&family=IM+Fell+English+SC&family=Montserrat:wght@600&display=swap" rel="stylesheet">
-
-</head>
-
-
-
 <%- include("partials/header.ejs") %>
 
 
@@ -47,7 +9,7 @@
     <!-- Review form -->
     <form action="/add" method="post">
 
-    <!-- Display a book here -->
+    <!-- Display book here -->
     <% if (locals.book) { %>
         <div class="review-container">
 
@@ -58,6 +20,8 @@
 
                 <!-- Image of book -->
                 <p> <img src="<%=book.cover_url%>" alt="book.title"> </p>
+                <input type="hidden" id="cover_url" name="cover_url" value="<%=book.cover_url%>" >
+                <input type="hidden" id="isbn" name="isbn" value="<%=book.isbn%>" >
             </div>
 
             <div class="right-col">

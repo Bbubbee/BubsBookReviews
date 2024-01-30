@@ -30,3 +30,27 @@ header {
 /* Review Page */
 /*************************************************************/
 
+.review-container {
+    display: flex;
+    gap: 2em; 
+    justify-content: center;
+}
+
+
+/*************************************************************/
+/* View Page - viewing a single review */
+/*************************************************************/
+
+.view-container {
+    display: flex;
+    justify-content: center;
+    gap: 2em; 
+}
+
+.view-container .left-col {
+
+}
+
+.view-container .right-col {
+    padding: 1em;
+}
