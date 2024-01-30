@@ -21,7 +21,7 @@
     <% if (locals.books) { %>
         <% books.forEach(book => { %>
             <div class="book">
-                <a href="/review/<%= book.isbn %>"><img src= <%= book.cover_url %> alt="book image"></a>
+                <a href="/modify/<%= book.isbn %>"><img src= <%= book.cover_url %> alt="book image"></a>
                 <h3> <%= book.title %> </h3>
             </div>
         <% }) %>

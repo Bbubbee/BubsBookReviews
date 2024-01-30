@@ -41,14 +41,17 @@ app.get('/', async (req, res) => {
     // Get reviewed books from the database.
     try {
         const result = await db.query("SELECT * FROM books_reviewed");
-        const books = result.rows; 
-        console.log(books); 
+
+        result.rows.forEach(book => {
+            console.log(book); 
+            books_reviewed.push(book); 
+        });
     }
     catch (err) {
-        
+        books_reviewed = []; 
     }
 
-    res.render('index.ejs', { temp_data: {} } );
+    res.render('index.ejs', { books: books_reviewed } );
 });
 
 
@@ -128,21 +131,51 @@ async function get_books(title) {
     A user selects a book to review. 
     Uses it's isbn to fetch the book from the array in memory. 
 */
-app.get('/review/:isbn', async (req, res) => {
-    const isbn = req.params.isbn;
+app.get('/modify/:isbn', async (req, res) => {
+    const value = req.params.isbn;
 
-    try {
-        // Check for book in books array. 
-        const book = await books.find(book => book.isbn == isbn);
-        console.log(book);
+    /* 
+        Determine if this is a new review or an old review the client wants to see. 
+        We do that by checking what is passed into this function.
+        Either ISBN or ID. 
+        If the number is >= 4, it's ISBN. If not, ID. 
 
-        res.render('review.ejs', { book: book } );
+        If the ISBN is used, it means the client is making a new review. 
+        If ID, the client wants to see an old review.
+    */
+
+    // ISBN 
+    if (value.length >= 4) {
+        try {
+            // Check for book in books array. 
+            const book = await books.find(book => book.isbn == value);
+            res.render('modify.ejs', { book: book, new: true } );
+        }
+        catch (err) {
+            res.render('modify.ejs');
+        }
     }
-    catch (err) {
-        res.render('review.ejs');
+    // ID
+    else {
+        // Fetch the book from the database using the ID. 
+        try {
+            const result = await db.query("SELECT * FROM books_reviewed WHERE id = $1", [value]);
+            const book = result.rows[0];
+            console.log(book);
+
+            res.render('modify.ejs', { book: book, new: false } );
+        }
+        catch (err) {
+            res.render('modify.ejs');
+        }
     }
+
+    
 });
 
+app.get('/view/:id', (req, res) => {
+    res.render('view.ejs');
+});
 
 app.post('/add', async (req, res) => {
     const title = req.body.title 

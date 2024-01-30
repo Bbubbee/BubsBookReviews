@@ -14,16 +14,27 @@
 
         <h2>Books Bub has reviewed: </h2>
 
-        <% if (locals.books) { %>
-            <% books.forEach(book => { %>
-                <div class="book">
-                    <a href="/review/<%= book.isbn %>"><img src= <%= book.cover_url %> alt="book image"></a>
-                    <h3> <%= book.title %> </h3>
-                </div>
-            <% }) %>
-    
-        <!-- End of looping through books -->
-        <% } %>
+        <div class="books-container">
+
+            <!-- These are the books reviewed from the database. -->
+            <% if (locals.books) { %>
+                <% books.forEach(book => { %>
+                    <div class="book">
+                        
+                        <!-- Image of the book that links to the review page. -->
+                        <a href="/view/<%= book.id %>"><img src= <%= book.cover_url %> alt="book image"></a>
+
+                        <h3> <%= book.title %> </h3>
+                        <p>Rating: <%= book.rating %> </p>
+                    </div>
+                <% }) %>
+        
+            <!-- There are no books reviewed in the database. -->
+            <% } else { %>
+                <p>There are no books </p>
+            <% } %>
+
+        </div>
 
 
 
