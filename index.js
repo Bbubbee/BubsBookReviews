@@ -129,16 +129,6 @@ async function get_books(title) {
 app.get('/modify/:isbn', async (req, res) => {
     const value = req.params.isbn;
 
-    /* 
-        Determine if this is a new review or an old review the client wants to see. 
-        We do that by checking what is passed into this function.
-        Either ISBN or ID. 
-        If the number is >= 4, it's ISBN. If not, ID. 
-
-        If the ISBN is used, it means the client is making a new review. 
-        If ID, the client wants to see an old review.
-    */
-
     // ISBN 
     if (value.length >= 4) {
         try {
@@ -199,6 +189,19 @@ app.post('/add', async (req, res) => {
         console.log(err);
         res.redirect('/');
     }
+})
+
+app.get('/delete/:id', async (req, res) => {
+    const id = req.params.id
+
+    try {
+        await db.query("DELETE FROM books_reviewed WHERE id=$1", [id])
+    }
+    catch (err) {
+        console.log(err)
+    }
+
+    res.redirect('/');
 })
 
 

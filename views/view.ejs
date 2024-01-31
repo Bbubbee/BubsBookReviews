@@ -14,11 +14,16 @@
                 <img src= <%= book.cover_url %> alt="book image">
                 <h3> <%= book.title %> </h3>
                 <p>Rating: <%= book.rating %> </p>
+
+                <a href="#">Edit</a>
+                <a href="/delete/<%= book.id %>">Delete</a>
             </div>
 
             <div class="right-col">
                 <p> <%= book.review %> </p>
             </div>
+
+
         </div>
 
 
