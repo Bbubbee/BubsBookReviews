@@ -6,50 +6,113 @@
 
 <div class="wrapper">
 
-    <!-- Review form -->
-    <form action="/add" method="post">
+    <!-- This is a new review, show an empty review page -->
+    <% if (locals.new == true) { %>
+        <div class="new-review">
 
-    <!-- Display book here -->
-    <% if (locals.book) { %>
-        <div class="review-container">
+        <!-- Display book here -->
+        <% if (locals.book) { %>
+            <!-- Review form -->
+            <form action="/add" method="post">
+                <div class="review-container">
 
-            <div class="left-col">
-                <!-- Title of book -->
-                <strong> <%=locals.book.title%> </strong>
-                <input type="hidden" id="title" name="title" value="<%=locals.book.title%>" >
+                    <div class="left-col">
+                        <!-- Title of book -->
+                        <strong> <%=locals.book.title%> </strong>
+                        <input type="hidden" id="title" name="title" value="<%=locals.book.title%>" >
 
-                <!-- Image of book -->
-                <p> <img src="<%=book.cover_url%>" alt="book.title"> </p>
-                <input type="hidden" id="cover_url" name="cover_url" value="<%=book.cover_url%>" >
-                <input type="hidden" id="isbn" name="isbn" value="<%=book.isbn%>" >
-            </div>
+                        <!-- Image of book -->
+                        <p> <img src="<%=book.cover_url%>" alt="book.title"> </p>
+                        <input type="hidden" id="cover_url" name="cover_url" value="<%=book.cover_url%>" >
+                        <input type="hidden" id="isbn" name="isbn" value="<%=book.isbn%>" >
+                    </div>
 
-            <div class="right-col">
-                <!-- Form for title, review, percentage rating -->
-                <label for="review">Write a Review:</label>
-                <br>
-                <textarea id="review" name="review" rows="20" cols="50" placeholder="Type your review here..."></textarea>
-                <br>
+                    <div class="right-col">
+                        <!-- Form for title, review, percentage rating -->
+                        <label for="review">Write a Review:</label>
+                        <br>
+                        <textarea id="review" name="review" rows="20" cols="50" placeholder="Type your review here..."></textarea>
+                        <br>
 
-                <!-- Rating percentage slider -->
-                <div class="slider-container">
-                    <input type="number" id="rating" name="rating" min="0" max="100" required>
+                        <!-- Rating percentage slider -->
+                        <div class="slider-container">
+                            <input type="number" id="rating" name="rating" min="0" max="100" required>
+                        </div>
+                        <!-- End slider container  -->
+                        
+                        <input type="submit" value="Submit Review">
+
+                    </div>
+                    
                 </div>
-                <!-- End slider container  -->
-                
-                <input type="submit" value="Submit Review">
+            <!-- End of review-container -->
 
-            </div>
-            
+        </form>
+        <!-- End of review form -->
+
+        <!-- Failed to display the book for review -->
+        <% } else { %>
+            <p>Error fetching book. </p>
+        <% } %>
+
+        <!-- End of new review -->
         </div>
-        <!-- End of review-container -->
 
-    </form>
-    <!-- End of review form -->
-
-    <!-- Failed to display the book for review -->
+    <!-- This is an old review, put the review in the input fields -->
     <% } else { %>
-        <p>Error fetching book. </p>
+        <div class="old-review">
+        
+        <!-- Display book here -->
+        <% if (locals.book) { %>
+            <!-- Review form -->
+            <form action="/review" method="post" id="edit_form">
+                <div class="review-container">
+
+                    <div class="left-col">
+                        <!-- Title of book -->
+                        <strong> <%=locals.book.title%> </strong>
+                        <input type="hidden" id="title" name="title" value="<%=locals.book.title%>" >
+
+                        <!-- Image of book -->
+                        <p> <img src="<%=book.cover_url%>" alt="book.title"> </p>
+
+                        <!-- Hidden values -->
+                        <input type="hidden" id="cover_url" name="cover_url" value="<%=book.cover_url%>" >
+                        <input type="hidden" id="isbn" name="isbn" value="<%=book.isbn%>" >
+                        <input type="hidden" id="id" name="id" value="<%=book.id%>" >
+                    </div>
+
+                    <div class="right-col">
+                        <!-- Text review -->
+                        <label for="review">Write a Review:</label>
+                        <br>
+                        <textarea id="review" name="review" rows="20" cols="50"><%= book.review %></textarea>
+                        <br>
+
+                        <!-- Rating percentage slider -->
+                        <div class="slider-container">
+                            <input type="number" id="rating" name="rating" min="0" max="100" value="<%=book.rating%>"" required>
+                        </div>
+                        <!-- End slider container  -->
+                        
+                        <input type="submit" value="Submit Review">
+
+                    </div>
+                    
+                </div>
+            <!-- End of review-container -->
+
+            </form>
+            <!-- End of review form -->
+
+        <!-- Failed to display the book for review -->
+        <% } else { %>
+            <p>Error fetching book. </p>
+        <% } %>
+
+        </div>
+        <!-- End of old review -->
     <% } %>
+    
 
 </div>

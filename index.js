@@ -127,11 +127,23 @@ async function get_books(title) {
     Uses it's isbn to fetch the book from the array in memory. 
 */
 app.get('/modify/:isbn', async (req, res) => {
-    const value = req.params.isbn;
+    let value = req.params.isbn;
+
+    // Check if review exists in database. 
+    // If it does, view the review instead of creating a new review.
+    if (value.length >= 4) {  // ISBN. 
+        // Check database if ISBN exists. 
+        const result = await db.query("SELECT * FROM books_reviewed WHERE isbn=$1", [value]);
+        const review = result.rows[0];
+        if (review) { 
+            res.redirect('/view/'+review.id); 
+        }
+    }
 
     // ISBN 
     if (value.length >= 4) {
         try {
+            console.log("This is a new review")
             // Check for book in books array. 
             const book = await books.find(book => book.isbn == value);
             res.render('modify.ejs', { book: book, new: true } );
@@ -144,11 +156,14 @@ app.get('/modify/:isbn', async (req, res) => {
     else {
         // Fetch the book from the database using the ID. 
         try {
+            console.log("This is an old review")
+
             const result = await db.query("SELECT * FROM books_reviewed WHERE id = $1", [value]);
             const book = result.rows[0];
 
             res.render('modify.ejs', { book: book, new: false } );
         }
+        // Failed to get the review from the database. 
         catch (err) {
             res.render('modify.ejs');
         }
@@ -183,6 +198,29 @@ app.post('/add', async (req, res) => {
     try {
         await db.query("INSERT INTO books_reviewed (title, cover_url, rating, isbn, review) VALUES ($1, $2, $3, $4, $5)", 
         [title, cover_url, rating, isbn, review] );
+        res.redirect('/');
+    }
+    catch (err) {
+        console.log(err);
+        res.redirect('/');
+    }
+})
+
+app.post('/review', async (req, res) => {
+    console.log("Patch this data");
+    // Get review info
+    const title = req.body.title;
+    const cover_url = req.body.cover_url; 
+    const rating = parseInt(req.body.rating); 
+    const review = req.body.review; 
+    const isbn = req.body.isbn;
+    const id = req.body.id;
+
+
+    // Try and put reviewed book into database. 
+    try {
+        await db.query("UPDATE books_reviewed SET title=$1, cover_url=$2, rating=$3, isbn=$4, review=$5 WHERE id=$6", 
+        [title, cover_url, rating, isbn, review, id] );
         res.redirect('/');
     }
     catch (err) {
