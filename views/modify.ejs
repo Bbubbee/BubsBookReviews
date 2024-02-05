@@ -35,9 +35,12 @@
                         <br>
 
                         <!-- Rating percentage slider -->
+                        <br>
+                        <label for="review">Review:</label>
                         <div class="slider-container">
                             <input type="number" id="rating" name="rating" min="0" max="100" required>
                         </div>
+                        <br>
                         <!-- End slider container  -->
                         
                         <input type="submit" value="Submit Review">
@@ -70,7 +73,7 @@
 
                     <div class="left-col">
                         <!-- Title of book -->
-                        <strong> <%=locals.book.title%> </strong>
+                        <h3> <%=locals.book.title%> </strong> </h3>
                         <input type="hidden" id="title" name="title" value="<%=locals.book.title%>" >
 
                         <!-- Image of book -->
@@ -90,12 +93,15 @@
                         <br>
 
                         <!-- Rating percentage slider -->
+                        <br>
                         <div class="slider-container">
+                            <label for="rating">Rating:</label>
                             <input type="number" id="rating" name="rating" min="0" max="100" value="<%=book.rating%>"" required>
                         </div>
+                        <br>
                         <!-- End slider container  -->
                         
-                        <input type="submit" value="Submit Review">
+                        <input class="submit-button" type="submit" value="Submit Review">
 
                     </div>
                     
@@ -116,3 +122,5 @@
     
 
 </div>
+
+<%- include("partials/footer.ejs") %>

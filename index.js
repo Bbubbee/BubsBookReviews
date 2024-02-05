@@ -40,7 +40,7 @@ app.get('/', async (req, res) => {
 
     // Get reviewed books from the database.
     try {
-        const result = await db.query("SELECT * FROM books_reviewed");
+        const result = await db.query("SELECT * FROM books_reviewed ORDER BY title ASC");
 
         result.rows.forEach(book => {
             books_reviewed.push(book); 

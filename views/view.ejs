@@ -4,19 +4,21 @@
 
 
 <div class="wrapper">
-    <h1>This is a book bub has reviewed </h1>
-
 
     <!-- Review exists, show review -->
     <% if (locals.book) { %>
         <div class="view-container">
             <div class="left-col">
-                <img src= <%= book.cover_url %> alt="book image">
                 <h3> <%= book.title %> </h3>
-                <p>Rating: <%= book.rating %> </p>
+                <img src= <%= book.cover_url %> alt="book image">
+                <p class="rating">Rating: <%= book.rating %>% </p>
 
-                <a href="/modify/<%= book.id %>">Edit</a>
-                <a href="/delete/<%= book.id %>">Delete</a>
+                <div class="cta-buttons">
+                    <a class="edit-cta" href="/modify/<%= book.id %>">Edit</a>
+                    <a class="delete-cta" href="/delete/<%= book.id %>">Delete</a>
+                </div>
+
+                
             </div>
 
             <div class="right-col">
@@ -31,3 +33,5 @@
     <% } %>
     
 </div>
+
+<%- include("partials/footer.ejs") %>

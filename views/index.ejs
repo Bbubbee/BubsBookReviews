@@ -6,13 +6,13 @@
 
 <div class="wrapper">
 
-    <a href="/search-page"> <h2>Review a new book</h2> </a>
+    <div class="search-btn-2"> <a href="/search-page">  Review a new book </a> </div>
     
+    
+    <h2>Books Bub has reviewed: </h2>
 
 
     <div class="reviewed-books">
-
-        <h2>Books Bub has reviewed: </h2>
 
         <div class="books-container">
 
@@ -24,7 +24,7 @@
                         <a href="/view/<%= book.id %>"><img src= <%= book.cover_url %> alt="book image"></a>
 
                         <h3> <%= book.title %> </h3>
-                        <p>Rating: <%= book.rating %> </p>
+                        <p>Rating: <%= book.rating %>%</p>
                     </div>
                 <% }) %>
         
@@ -41,3 +41,5 @@
     <!-- End of .reviewed-books -->
     
 </div>
+
+<%- include("partials/footer.ejs") %>
