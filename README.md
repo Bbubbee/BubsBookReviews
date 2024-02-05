@@ -14,7 +14,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Bbubbee/BubsBookReviews">
-    <img src="./images/journal.svg" alt="Logo" width="80" height="80">
+    <img src="./images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Bub's Book Reviews</h3>
@@ -137,7 +137,7 @@ Project Link: [https://github.com/Bbubbee/BubsBookReviews](https://github.com/Bb
 [contributors-url]: https://github.com/Bbubbee/BubsBookReviews/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/Bbubbee/BubsBookReviews.svg?style=for-the-badge
 [forks-url]: https://github.com/Bbubbee/BubsBookReviews/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_usBbubbeeername/BubsBookReviews.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/Bbubbee/BubsBookReviews.svg?style=for-the-badge
 [stars-url]: https://github.com/Bbubbee/BubsBookReviews/stargazers
 [issues-shield]: https://img.shields.io/github/issues/Bbubbee/BubsBookReviews.svg?style=for-the-badge
 [issues-url]: https://github.com/Bbubbee/BubsBookReviews/issues
