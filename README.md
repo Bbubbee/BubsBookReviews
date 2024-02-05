@@ -14,13 +14,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/Bbubbee/BubsBookReviews">
-    <img src="./images/logo.png" alt="Logo" width="80" height="80">
+    <img src="./public/images/logo.png">
   </a>
 
 <h3 align="center">Bub's Book Reviews</h3>
 
   <p align="center">
-    This website allows users to post reviews about books. They can search for a book review it. 
+    This website allows users to post reviews about books and read uploaded reviews. 
     <br />
   </p>
 </div>
@@ -74,11 +74,10 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This project requires Node Package Manager and an SQL Database to run. I used pgAdmin4.
+This project requires Node Package Manager and an SQL Database (I used pgAdmin4) to run.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
 * npm
   ```sh
   npm install npm@latest -g
