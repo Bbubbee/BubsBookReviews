@@ -74,7 +74,7 @@
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This project requires Node Package Manager and an SQL Database (I used pgAdmin4) to run.
+This project requires Node Package Manager and an SQL Database (I used pgAdmin4).
 
 ### Prerequisites
 
@@ -89,21 +89,59 @@ This project requires Node Package Manager and an SQL Database (I used pgAdmin4)
    ```sh
    git clone https://github.com/Bbubbee/BubsBookReviews.git
    ```
-2. Install NPM packages
+2. Install all NPM packages
    ```sh
    npm install i 
    ```
-3. Set up the database 
+3. Set up the database
+  * Create a database called bookreviews
+  * Create a table called book_reviews with the following columns 
+  ```sql
+  CREATE TABLE book_reviews (
+    id SERIAL PRIMARY KEY,
+    title TEXT,
+    cover_url TEXT,
+    rating INT,
+    isbn TEXT,
+    review TEXT
+  )
+  ```
+4. Log on to PGadmin4 - change password and port to that of your own bookreviews database
+  ```js
+  const db = new pg.Client({
+      user: "postgres",
+      host: "localhost", 
+      database: "bookreviews", 
+      password: "booty", 
+      port: 5432
+  })
+  db.connect(); 
+  ```
+5. Run the server usign nodemon.
+  ```sh
+  nodemon index.js
+  ```
+6. Connect to it on localhost:3000
+   
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- USAGE EXAMPLES -->
-## Usage
+## Features
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+View reviewed books from the database 
+<img src="./public/images/features/features.png">
 
+Search for books by title 
+<img src="./public/images/features/features2.png">
+
+Write a new review
+<img src="./public/images/features/features3.png">
+
+View a single review. Allows you to edit or delete it
+<img src="./public/images/features/features4.png">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
