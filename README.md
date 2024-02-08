@@ -127,7 +127,7 @@ This project requires Node Package Manager and an SQL Database (I used pgAdmin4)
 
 
 <!-- USAGE EXAMPLES -->
-## Features
+## Preview
 
 View reviewed books from the database 
 <img src="./public/images/features/features.png">
